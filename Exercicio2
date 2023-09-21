@@ -1,0 +1,33 @@
+.data
+frase: .asciiz "Digite sua idade: "
+frase2: .asciiz "Sua idade daqui a 30 anos: "
+.text
+
+# Pede ao usuário para inserir a idade
+li $v0, 4               # Carrega o código da syscall para imprimir uma string
+la $a0, frase          # Carrega o endereço da mensagem
+syscall
+
+# Lê a idade do usuário
+li $v0, 5 
+syscall
+move $t0, $v0           # Move o valor lido para $t0
+
+# Adiciona 30 anos à idade
+li $t1, 30              # Carrega o valor 30 em $t1
+add $t0, $t0, $t1       # Soma $t1 à idade, resultado em $t0
+
+# Mostra a frase "Sua idade daqui a 30 anos: "
+li $v0, 4               # Carrega o código da syscall para imprimir uma string
+la $a0, frase2          # Carrega o endereço da mensagem
+syscall
+
+# Imprime a idade daqui a 30 anos
+li $v0, 1               # Carrega o código da syscall para imprimir um inteiro
+move $a0, $t0           # Move a idade atual + 30 anos para $a0
+syscall
+
+# Encerra o programa
+li $v0, 10              # Carrega o código da syscall para encerrar o programa
+syscall
+       
